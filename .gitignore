@@ -1,0 +1,3 @@
+.metals
+ccls-cache/*
+.ccls-cache
