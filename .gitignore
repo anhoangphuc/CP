@@ -1,3 +1,4 @@
 .metals
 ccls-cache/*
 .ccls-cache
+.vscode
