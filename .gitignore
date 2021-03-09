@@ -2,3 +2,6 @@
 ccls-cache/*
 .ccls-cache
 .vscode
+*.exe
+*.inp
+*.out
