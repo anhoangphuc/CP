@@ -2,10 +2,9 @@
 using namespace std;
 
 int main() {
-    set<int> s1;
-    vector<int> s2(10);
-    s1.insert(1);
-    s1.insert(2);
-    transform(s1.begin(), s1.end(), s2.begin(),
-    [](int x) {return x;});
+    vector<int> a = {1, 2, 1, 3};
+    vector<int> b = {10};
+    b.insert(b.begin(), a.begin(), a.end());
+    for (auto x: b)
+        cout << x << endl;
 }
