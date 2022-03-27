@@ -26,6 +26,6 @@ fn main() {
 
 #[test]
 fn test() {
-    let nums = vec![2, 7, 7, 8];
-    assert_eq!(Solution::remove_duplucates(nums), 3);
+    let mut nums = vec![2, 7, 7, 8];
+    assert_eq!(Solution::remove_duplucates(&mut nums), 3);
 }
