@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 struct ListNode {
@@ -11,25 +11,31 @@ struct ListNode {
 
 class Solution {
     public:
-        ListNode* removeNthFromEnd(ListNode* head, int n) {
-                ListNode* p1 = head;
-        ListNode* p2 = nullptr;
-        int cnt{0};
-        while (true) {
-          
-            if (cnt == n)
-                p2 = head;
-            if (p1 -> next == nullptr)
-                break;
-            cnt += 1;
-            p1 = p1 -> next;
-            if (p2 != nullptr)
-                p2 = p2 -> next;
-        }
-        if (p2 != nullptr)
-            p2 -> next = (p2 -> next) -> next;
-        else
-            head = head -> next;
-        return head;
-    }
+        ListNode* removeNthFromEnd(ListNode* head, int n){
+			int cnt = 0;
+			ListNode* p1 = head;
+			ListNode* p2 = NULL;
+			ListNode* preP2 = NULL;
+			while (p1 != NULL) {
+					cnt += 1;
+					if (cnt == n) {
+				p2 = head;
+					}
+					p1 = p1->next;
+					if (p1 == NULL) {
+				if (preP2 == NULL) {
+						head = head->next;
+				} else {
+						preP2->next = p2->next;
+				}
+				break;
+					}
+					preP2 = p2;
+					if (p2 != NULL) {
+				p2 = p2->next;
+					}
+			}
+			return head;
+	}		
+
 };
