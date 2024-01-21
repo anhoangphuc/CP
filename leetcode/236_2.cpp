@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 using namespace std;
 
 struct TreeNode {
@@ -15,36 +16,16 @@ class Solution {
 	public:
 		map<TreeNode*, pair<TreeNode*, int>> treeInfo;
 		TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-			treeInfo[root] = {NULL, 0};	
-			buildTree(root);
-			if (treeInfo[p].second < treeInfo[q].second) {
-				TreeNode* tmp = p;
-				p = q;
-				q = tmp;
-			}
-			while (treeInfo[p].second > treeInfo[q].second) {
-				p = treeInfo[p].first;
-			}
-			
-			// Now p and q has same height;
-			if (p == q) return p;
-			while (true) {
-				p = treeInfo[p].first;
-				q = treeInfo[q].first;
-				if (p == q) return p;
-			}
-			return root;
-		}
-		
-		void buildTree(TreeNode* root) {
-			if (root->left != NULL) {
-				treeInfo[root->left] = {root, treeInfo[root] + 1};
-				buildTree(root->left);
-			}
-			if (root->right != NULL) {
-				treeInfo[root->right] = {root, treeInfo[root] + 1};
-				buildTree(root->right);
-			}
+			if (root == p || root == q || root == NULL) return root;
+			auto leftRes = lowestCommonAncestor(root->left, p, q);
+			auto rightRes = lowestCommonAncestor(root->right, p, q);
+			if (leftRes != NULL && rightRes != NULL)
+				return root;
+			else if (leftRes == NULL && rightRes != NULL)
+				return rightRes;
+			else if (leftRes != NULL && rightRes == NULL)
+				return leftRes;
+			else return NULL;
 		}
 };
 
