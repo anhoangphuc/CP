@@ -11,25 +11,38 @@ struct ListNode {
 
 class Solution {
     public:
-        ListNode* removeNthFromEnd(ListNode* head, int n) {
-                ListNode* p1 = head;
-        ListNode* p2 = nullptr;
-        int cnt{0};
-        while (true) {
-          
-            if (cnt == n)
-                p2 = head;
-            if (p1 -> next == nullptr)
-                break;
-            cnt += 1;
-            p1 = p1 -> next;
-            if (p2 != nullptr)
-                p2 = p2 -> next;
+    ListNode* swapPairs(ListNode* head) {
+        if (!head || !head -> next) return head;
+
+        ListNode *start = nullptr, *prev = nullptr, *first = nullptr, *second = nullptr;
+
+        while (head) {
+            if (head -> next) {
+                first = head;
+                second = head -> next;
+                head = head -> next -> next;
+                second -> next = first;
+            } else {
+                second = head;
+                first = nullptr;
+                head = head -> next;
+            }
+
+            if (prev)
+                prev -> next = second;
+            else
+                start = second;
+            prev = first;
         }
-        if (p2 != nullptr)
-            p2 -> next = (p2 -> next) -> next;
+        if (first)
+            first -> next = nullptr;
         else
-            head = head -> next;
-        return head;
+            second -> next = nullptr;
+        return start;
     }
 };
+
+int main() {
+    Solution a = Solution();
+    cout << "Hello world";
+}

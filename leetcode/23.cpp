@@ -1,4 +1,7 @@
-#include <bits/stdc++.h>
+#include <vector>
+#include <iostream>
+#include <set>
+
 using namespace std;
 
 struct ListNode {
@@ -9,36 +12,41 @@ struct ListNode {
     ListNode(int x, ListNode *next): val(x), next(next) {}
 };
 
+
+struct cmp {
+    bool operator() (ListNode* a, ListNode* b) const {
+        return a->val < b->val;
+    }
+};
+
+
 class Solution {
+    multiset<ListNode*, cmp> s;
     public:
-    ListNode* swapPairs(ListNode* head) {
-        if (!head || !head -> next) return head;
-
-        ListNode *start = nullptr, *prev = nullptr, *first = nullptr, *second = nullptr;
-
-        while (head) {
-            if (head -> next) {
-                first = head;
-                second = head -> next;
-                head = head -> next -> next;
-                second -> next = first;
-            } else {
-                second = head;
-                first = nullptr;
-                head = head -> next;
-            }
-
-            if (prev)
-                prev -> next = second;
-            else
-                start = second;
-            prev = first;
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        for (auto list: lists) {
+            if (list != NULL)
+                s.insert(list);
         }
-        if (first)
-            first -> next = nullptr;
-        else
-            second -> next = nullptr;
-        return start;
+
+        ListNode* res = NULL;
+        ListNode* cur = NULL;
+        while (!s.empty()) {
+            auto top = *s.begin();
+            if (res == NULL) {
+                res = top;
+                cur = res;
+            } else {
+                cur->next = top;
+                cur = cur->next;
+            }
+            s.erase(s.begin());
+            if (top->next != NULL) {
+                s.insert(top->next);
+            }
+        }
+
+        return res;
     }
 };
 
